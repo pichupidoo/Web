@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "13uI1RSPlyPGxcKfTNwLTEtrE4aptsNajpvtU/gzylKJXJVU8esfXfmjILABB1Kjeh3WEC20Rfof1S/HcarQxw==",
+  "dgSpecHash": "qtBFxz1TVv9M8e72oQgn6HiwziG59LRezpyAzbicVwfY1YRSb48dR46SYR6WB2EgtthirVDC8A0+QWA7lKVS0g==",
   "success": true,
-  "projectFilePath": "/home/andrew/course4/web/lab2/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj",
+  "projectFilePath": "/home/andrew/course4/web/Web/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj",
   "expectedPackageFiles": [
     "/home/andrew/.nuget/packages/azure.core/1.38.0/azure.core.1.38.0.nupkg.sha512",
     "/home/andrew/.nuget/packages/azure.identity/1.11.4/azure.identity.1.11.4.nupkg.sha512",

@@ -5533,11 +5533,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/andrew/course4/web/lab2/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj",
+      "projectUniqueName": "/home/andrew/course4/web/Web/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj",
       "projectName": "ASPNetCoreWebAPI",
-      "projectPath": "/home/andrew/course4/web/lab2/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj",
+      "projectPath": "/home/andrew/course4/web/Web/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj",
       "packagesPath": "/home/andrew/.nuget/packages/",
-      "outputPath": "/home/andrew/course4/web/lab2/ASPNetCoreWebAPI/obj/",
+      "outputPath": "/home/andrew/course4/web/Web/ASPNetCoreWebAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/andrew/.nuget/NuGet/NuGet.Config"
@@ -5616,7 +5616,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.119/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.121/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

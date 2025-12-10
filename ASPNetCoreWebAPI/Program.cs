@@ -4,43 +4,46 @@ using ASPNetCoreWebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();  
-builder.Services.AddControllers(); //разрешает использование MVC-контроллеров для обработки HTTP-запросов.
+builder.Services.AddSwaggerGen();
 
+// Разрешаем использование MVC-контроллеров
+builder.Services.AddControllers();
+
+// CORS: разрешаем React фронтенду обращаться к API
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy => policy
+            .WithOrigins("http://127.0.0.1:5173", "http://localhost:5173") // фронтенд
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
+// База данных
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))); 
 
-builder.Services.AddScoped<IValeraService, ValeraService>();  //"Когда кто-то просит повара для Валеры, давай ему одного и того же повара на весь заказ, но для нового заказа давай нового повара один экземпляр ValeraService на один HTTP запрос!
+// Сервис Валеры
+builder.Services.AddScoped<IValeraService, ValeraService>();
 
-var app = builder.Build();  //Собирает все сервисы и middleware в готовое веб-приложение.
+var app = builder.Build();
 
+// Swagger в режиме разработки
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// Включаем CORS до маршрутизации
+app.UseCors("AllowReactApp");
+
+// Перенаправление на HTTPS
 app.UseHttpsRedirection();
 
+// Маршруты контроллеров
 app.MapControllers();
 
-
 app.Run();
-
-
-/*
-Приходит запрос на /api/valera/1/work
-
-Создаётся официант (ValeraController)
-
-Буфет автоматически даёт ему повара (ValeraService)
-
-Повару буфет даёт холодильник (ApplicationDbContext)
-
-Повар достаёт Валеру из холодильника, меняет его состояние
-
-Повар сохраняет Валеру обратно в холодильник
-
-Официант возвращает результат клиенту
-*/
