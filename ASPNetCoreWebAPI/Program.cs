@@ -1,49 +1,89 @@
 using Microsoft.EntityFrameworkCore;
 using ASPNetCoreWebAPI.Data;
 using ASPNetCoreWebAPI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Swagger
+// Add services to the container.
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Разрешаем использование MVC-контроллеров
-builder.Services.AddControllers();
+// Подключение БД
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") 
+        ?? "Data Source=valera.db"));
 
-// CORS: разрешаем React фронтенду обращаться к API
-builder.Services.AddCors(options =>
+// Регистрация сервиса
+builder.Services.AddScoped<IValeraService, ValeraService>();
+
+// Настройка JWT Authentication
+builder.Services.AddAuthentication(options =>
 {
-    options.AddPolicy("AllowReactApp",
-        policy => policy
-            .WithOrigins("http://127.0.0.1:5173", "http://localhost:5173") // фронтенд
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+    };
 });
 
-// База данных
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))); 
+builder.Services.AddAuthorization();
 
-// Сервис Валеры
-builder.Services.AddScoped<IValeraService, ValeraService>();
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
-// Swagger в режиме разработки
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// Включаем CORS до маршрутизации
 app.UseCors("AllowReactApp");
 
-// Перенаправление на HTTPS
-app.UseHttpsRedirection();
+app.UseAuthentication(); // ← ВАЖНО: до UseAuthorization
+app.UseAuthorization();
 
-// Маршруты контроллеров
 app.MapControllers();
 
 app.Run();
+
+
+/*
+Приходит запрос на /api/valera/1/work
+
+Создаётся официант (ValeraController)
+
+Буфет автоматически даёт ему повара (ValeraService)
+
+Повару буфет даёт холодильник (ApplicationDbContext)
+
+Повар достаёт Валеру из холодильника, меняет его состояние
+
+Повар сохраняет Валеру обратно в холодильник
+
+Официант возвращает результат клиенту
+*/

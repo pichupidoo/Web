@@ -11,6 +11,7 @@ namespace ASPNetCoreWebAPI.Data
         }
 
         public DbSet<Valera> Valeras { get; set; } //DbSet<T> — это таблица в базе данных, где EF Core хранит объекты Valera.
+        public DbSet<User> Users { get; set; } // ← ДОБАВЬ ЭТО
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) //OnModelCreating вызывается один раз при создании модели базы данных
         {

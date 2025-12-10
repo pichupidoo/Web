@@ -7,7 +7,8 @@ namespace ASPNetCoreWebAPI.Services
         // Базовые CRUD операции
         Task<Valera?> GetValeraByIdAsync(int id);
         Task<IEnumerable<Valera>> GetAllValerasAsync();
-        Task<Valera> CreateValeraAsync();
+        Task<IEnumerable<Valera>> GetValerasByUserIdAsync(int userId);
+        Task<Valera> CreateValeraAsync(int userId); 
         Task<bool> DeleteValeraAsync(int id);
         
         // Действия Валеры

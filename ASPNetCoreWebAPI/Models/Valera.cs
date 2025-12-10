@@ -8,6 +8,7 @@ namespace ASPNetCoreWebAPI.Models
         public int Joy { get; set; }
         public int Fatigue { get; set; }
         public int Money { get; set; }
+        public int UserId { get; set; }
 
         public Valera()
         {

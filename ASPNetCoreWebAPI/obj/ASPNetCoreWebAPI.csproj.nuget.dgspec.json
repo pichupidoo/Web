@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/andrew/course4/web/Web/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj": {}
+    "/home/andrew/course4/web/ASP.NET/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj": {}
   },
   "projects": {
-    "/home/andrew/course4/web/Web/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj": {
+    "/home/andrew/course4/web/ASP.NET/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/andrew/course4/web/Web/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj",
+        "projectUniqueName": "/home/andrew/course4/web/ASP.NET/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj",
         "projectName": "ASPNetCoreWebAPI",
-        "projectPath": "/home/andrew/course4/web/Web/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj",
+        "projectPath": "/home/andrew/course4/web/ASP.NET/ASPNetCoreWebAPI/ASPNetCoreWebAPI.csproj",
         "packagesPath": "/home/andrew/.nuget/packages/",
-        "outputPath": "/home/andrew/course4/web/Web/ASPNetCoreWebAPI/obj/",
+        "outputPath": "/home/andrew/course4/web/ASP.NET/ASPNetCoreWebAPI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/andrew/.nuget/NuGet/NuGet.Config"
@@ -38,6 +38,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.19, )"

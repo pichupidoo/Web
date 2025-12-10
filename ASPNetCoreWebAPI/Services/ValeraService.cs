@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ASPNetCoreWebAPI.Services
 {
-    public class ValeraService : IValeraService  //Это конкретная реализация интерфейса IValeraService
+    public class ValeraService : IValeraService
     {
         private readonly ApplicationDbContext _context;
 
         public ValeraService(ApplicationDbContext context)
         {
-            _context = context; //_context — это ссылка на DbContext, через который происходит работа с базой.Благодаря этому класс может читать и писать в таблицу Valeras.
+            _context = context;
         }
 
         public async Task<Valera?> GetValeraByIdAsync(int id)
@@ -23,9 +23,19 @@ namespace ASPNetCoreWebAPI.Services
             return await _context.Valeras.ToListAsync();
         }
 
-        public async Task<Valera> CreateValeraAsync()
+        public async Task<IEnumerable<Valera>> GetValerasByUserIdAsync(int userId)
         {
-            var valera = new Valera();
+            return await _context.Valeras
+                .Where(v => v.UserId == userId)
+                .ToListAsync();
+        }
+
+        public async Task<Valera> CreateValeraAsync(int userId)
+        {
+            var valera = new Valera
+            {
+                UserId = userId // Привязываем к пользователю
+            };
             _context.Valeras.Add(valera);
             await _context.SaveChangesAsync();
             return valera;
